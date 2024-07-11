@@ -3,7 +3,8 @@ import fs from 'fs';
 
 import { CDPSession, Page } from 'puppeteer';
 
-import { PuppeteerScreenRecorderOptions } from './pageVideoStreamTypes';
+// import { PuppeteerScreenRecorderOptions } from './pageVideoStreamTypes';
+import { PuppeteerScreenRecorderOptions } from "../resources/PuppeteerScreenRecorderOptions";
 
 /**
  * @ignore

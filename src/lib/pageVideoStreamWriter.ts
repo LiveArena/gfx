@@ -5,12 +5,16 @@ import { PassThrough, Writable } from 'stream';
 
 import ffmpeg, { setFfmpegPath } from 'fluent-ffmpeg';
 
-import {
-  PageScreenFrame,
-  SupportedFileFormats,
-  VIDEO_WRITE_STATUS,
-  VideoOptions,
-} from './pageVideoStreamTypes';
+// import {
+//   PageScreenFrame,
+//   SupportedFileFormats,
+//   VIDEO_WRITE_STATUS,
+//   VideoOptions,
+// } from './pageVideoStreamTypes';
+import { PageScreenFrame } from "../resources/PageScreenFrame";
+import { PuppeteerScreenRecorderOptions } from "../resources/PuppeteerScreenRecorderOptions";
+import {SupportedFileFormats} from "../resources/SupportedFileFormats";
+import { VIDEO_WRITE_STATUS } from "../resources/VIDEO_WRITE_STATUS";
 
 /**
  * @ignore
@@ -33,12 +37,12 @@ export default class PageVideoStreamWriter extends EventEmitter {
   public frameLoss = 0;
 
   private status = VIDEO_WRITE_STATUS.NOT_STARTED;
-  private options: VideoOptions;
+  private options: Omit<PuppeteerScreenRecorderOptions, 'followNewTab'>;
 
   private videoMediatorStream: PassThrough = new PassThrough();
   private writerPromise: Promise<boolean>;
 
-  constructor(destinationSource: string | Writable, options?: VideoOptions) {
+  constructor(destinationSource: string | Writable, options?: Omit<PuppeteerScreenRecorderOptions, 'followNewTab'>) {
     super();
 
     if (options) {

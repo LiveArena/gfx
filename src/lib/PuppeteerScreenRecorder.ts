@@ -4,9 +4,14 @@ import { Writable } from 'stream';
 
 import { Page } from 'puppeteer';
 
+import { PageScreenFrame } from "../resources/PageScreenFrame";
+import { PuppeteerScreenRecorderOptions } from "../resources/PuppeteerScreenRecorderOptions";
+
 import { PageVideoStreamCollector } from './pageVideoStreamCollector';
-import { PageScreenFrame, PuppeteerScreenRecorderOptions } from './pageVideoStreamTypes';
+// import { PageScreenFrame, PuppeteerScreenRecorderOptions } from './pageVideoStreamTypes';
 import PageVideoStreamWriter from './pageVideoStreamWriter';
+
+
 
 /**
  * @ignore
