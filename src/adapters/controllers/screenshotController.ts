@@ -8,12 +8,36 @@ import { PuppeteerScreenRecorder } from '../../lib/PuppeteerScreenRecorder';
 
 class ScreenshotController
 {
-    public get(req:Request,res:Response):void
+    
+    public async stop(req:Request,res:Response)
     {
-        res.send('Get Shot');
+        const executablePath = process.env['PUPPETEER_EXECUTABLE_PATH'];
+        const browser = await puppeteer.launch({...(executablePath ? { executablePath: executablePath } : {}), headless: false, });
+        const page = await browser.newPage();
+        const recorder = new PuppeteerScreenRecorder(page);
+        await recorder.stop();
+        await browser.close();
+        res.send('Stoped');
     }
-    public async create(req:Request,res:Response)
+
+    public status(req:Request,res:Response)
     {
+       const isRunning=false;
+       if(!isRunning){
+        res.send(`Not running..`);
+       }
+       else
+       {
+        res.send(`Running..`);
+       }
+         
+       
+    }
+    public async start(req:Request,res:Response)
+    {
+        const path=req.query.path;
+        console.log(path);
+        
         let format='./report/video/simple1.mp4';
         const argList = process.argv.slice(2);
         const isStream = argList.includes('stream');
@@ -30,6 +54,7 @@ class ScreenshotController
             const fileWriteStream = fs.createWriteStream(format);
             passthrough.pipe(fileWriteStream);
             await recorder.startStream(passthrough);
+            
         } else {
             console.log(`recorded`);
             await recorder.start(format);

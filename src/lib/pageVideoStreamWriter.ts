@@ -30,7 +30,7 @@ const SUPPORTED_FILE_FORMATS = [
  * @ignore
  */
 export default class PageVideoStreamWriter extends EventEmitter {
-  private readonly screenLimit = 10;
+  private readonly screenLimit = 1000;
   private screenCastFrames = [];
   public duration = '00:00:00:00';
   public frameGain = 0;
@@ -269,7 +269,7 @@ export default class PageVideoStreamWriter extends EventEmitter {
   }
 
   public insert(frame: PageScreenFrame): void {
-    // reduce the queue into half when it is full
+    // reduce the queue into half when it is full  
     if (this.screenCastFrames.length === this.screenLimit) {
       const numberOfFramesToSplice = Math.floor(this.screenLimit / 2);
       const framesToProcess = this.screenCastFrames.splice(
@@ -281,8 +281,8 @@ export default class PageVideoStreamWriter extends EventEmitter {
         this.screenCastFrames[0].timestamp
       );
     }
-
-    const insertionIndex = this.findSlot(frame.timestamp);
+    
+    const insertionIndex = this.findSlot(frame.timestamp);    
 
     if (insertionIndex === this.screenCastFrames.length) {
       this.screenCastFrames.push(frame);
