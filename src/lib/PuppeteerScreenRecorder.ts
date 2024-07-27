@@ -63,15 +63,13 @@ export class PuppeteerScreenRecorder {
     this.page = page;
   }
 
-  /**
-   * @ignore
-   */
+  
   private setupListeners(): void {
     this.page.once('close', async () => await this.stop());
 
     let index = 1;
     const path = process.env.PNG_PATH;
-    this.streamReader.on('pageScreenFrame', (pageScreenFrame: PageScreenFrame) => {
+    this.streamReader.on('pageScreenFrame', (pageScreenFrame: PageScreenFrame) => {      
       fs.writeFileSync(path + 'gfx-' + String(index++).padStart(5, "0") + '-' + pageScreenFrame.timestamp.toFixed(3).replace(".", "") + '.png', pageScreenFrame.blob);
       this.streamWriter.insert(pageScreenFrame);
     });
